@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial;
+    font-size: 17px;
+  }
+  
+  .loginContainer {
+    position: relative;
+    max-width: 750px;
+    margin: 0 auto;
+  }
+  
+  .loginContainer img {vertical-align: middle;}
+  
+  .loginContainer .content {
+    position: absolute;
+    bottom: 0;
+    width: 60%;
+    padding: 20px;
+  }

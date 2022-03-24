@@ -31,6 +31,8 @@ public class AuthService {
         return userRepository.findByEmail(email).get();        
     }
 
+    public User findByPhoneNumber(Long phoneNumber) {return userRepository.findByPhoneNumber(phoneNumber).get(); }
+
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
     }

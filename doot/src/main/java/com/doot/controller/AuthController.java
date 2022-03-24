@@ -59,15 +59,27 @@ public class AuthController {
             throw new UserNotVerifiedException(user.getUsername() + " is not verified");
         }
 
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
-                        loginRequest.getPassword()));
+        if(loginRequest.getEmail() == null){
+            User user1 = authService.findByPhoneNumber(loginRequest.getPhoneNumber());
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(user1.getEmail(),
+                            loginRequest.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            String token = tokenProvider.createToken(authentication);
 
-        String token = tokenProvider.createToken(authentication);
+            return ResponseEntity.ok(new AuthResponse(token));
+        }
+        else {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),
+                            loginRequest.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return ResponseEntity.ok(new AuthResponse(token));
+            String token = tokenProvider.createToken(authentication);
+
+            return ResponseEntity.ok(new AuthResponse(token));
+        }
 
     }
 
